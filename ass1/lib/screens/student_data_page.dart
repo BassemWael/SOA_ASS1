@@ -113,7 +113,6 @@ class _StudentDataPageState extends State<StudentDataPage> {
                       return; // Stop further execution
                     }
                     _submitData(counter);
-                    counter--;
                     print(counter);
                   },
                   child: const Text("Next Student"),
@@ -159,7 +158,7 @@ class _StudentDataPageState extends State<StudentDataPage> {
     );
   }
 
-  void _submitData(int counter) async {
+void _submitData(int counter) async {
   // Example: Retrieve the data from controllers
   final studentId = studentIdController.text;
   final firstName = firstNameController.text;
@@ -199,7 +198,14 @@ class _StudentDataPageState extends State<StudentDataPage> {
           backgroundColor: Colors.green,
         ),
       );
-      if (counter == 1) {
+
+      // Decrease the counter
+      setState(() {
+        counter--;
+      });
+
+      // Navigate if the counter is 1
+      if (counter == 0) {
         Navigator.pushNamedAndRemoveUntil(
           context,
           MyHomePage.id,
@@ -228,6 +234,7 @@ class _StudentDataPageState extends State<StudentDataPage> {
   // Clear the input fields
   _resetFields();
 }
+
   void _resetFields() {
     // Clear all text fields
     studentIdController.clear();
