@@ -147,7 +147,8 @@ class _StudentDataPageState extends State<StudentDataPage> {
                 border: const OutlineInputBorder(),
               ),
               inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly, // Allows only digits
+                FilteringTextInputFormatter.digitsOnly,
+                FilteringTextInputFormatter.allow("."),
               ],
             ),
     );
