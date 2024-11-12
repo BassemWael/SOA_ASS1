@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:ass1/screens/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 class StudentDataPage extends StatefulWidget {
   const StudentDataPage({super.key, required this.counter});
@@ -147,42 +150,84 @@ class _StudentDataPageState extends State<StudentDataPage> {
                 border: const OutlineInputBorder(),
               ),
               inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-                FilteringTextInputFormatter.allow("."),
+                // FilteringTextInputFormatter.allow('.'),
+                // FilteringTextInputFormatter.digitsOnly,
+                FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+                
               ],
             ),
     );
   }
 
-  void _submitData(int counter) {
-    // Example: Retrieve the data from controllers and process it
-    final studentId = studentIdController.text;
-    final firstName = firstNameController.text;
-    final lastName = lastNameController.text;
-    final gender = genderController.text;
-    final gpa = double.tryParse(gpaController.text) ?? 0.0;
-    final level = int.tryParse(levelController.text) ?? 0;
-    final address = addressController.text;
+  void _submitData(int counter) async {
+  // Example: Retrieve the data from controllers
+  final studentId = studentIdController.text;
+  final firstName = firstNameController.text;
+  final lastName = lastNameController.text;
+  final gender = genderController.text;
+  final gpa = double.tryParse(gpaController.text) ?? 0.0;
+  final level = int.tryParse(levelController.text) ?? 0;
+  final address = addressController.text;
 
-    // Print the values (replace with actual submission logic)
-    print("Student ID: $studentId");
-    print("First Name: $firstName");
-    print("Last Name: $lastName");
-    print("Gender: $gender");
-    print("GPA: $gpa");
-    print("Level: $level");
-    print("Address: $address");
-    if (counter == 1) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        MyHomePage.id,
-            (route) => false,
+  // Create the JSON data to be sent
+  final Map<String, dynamic> studentData = {
+    "id": studentId,
+    "firstName": firstName,
+    "lastName": lastName,
+    "gender": gender,
+    "gpa": gpa.toString(), // Assuming the server expects a string
+    "level": level.toString(), // Assuming the server expects a string
+    "address": address,
+  };
+
+  // Send the POST request
+  final url = Uri.parse('http://127.0.0.1:8080/api/students');
+  try {
+    final response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode(studentData),
+    );
+
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      // Show a success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Student data added successfully."),
+          backgroundColor: Colors.green,
+        ),
+      );
+      if (counter == 1) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          MyHomePage.id,
+          (route) => false,
+        );
+      }
+    } else {
+      // Show an error message if the response is not successful
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Failed to add student data. Error: ${response.body}"),
+          backgroundColor: Colors.red,
+        ),
       );
     }
-    _resetFields();
-    // Add any validation or submission logic here
+  } catch (e) {
+    // Handle any errors that occur during the request
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("An error occurred: $e"),
+        backgroundColor: Colors.red,
+      ),
+    );
   }
 
+  // Clear the input fields
+  _resetFields();
+}
   void _resetFields() {
     // Clear all text fields
     studentIdController.clear();
