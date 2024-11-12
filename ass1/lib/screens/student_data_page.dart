@@ -23,6 +23,13 @@ class _StudentDataPageState extends State<StudentDataPage> {
   final TextEditingController gpaController = TextEditingController();
   final TextEditingController levelController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
+   int counter = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    counter = widget.counter; // Initialize with widget's counter value
+  }
 
   @override
   void dispose() {
@@ -110,10 +117,9 @@ class _StudentDataPageState extends State<StudentDataPage> {
                           backgroundColor: Colors.red,
                         ),
                       );
-                      return; // Stop further execution
+                      return;
                     }
-                    _submitData(counter);
-                    print(counter);
+                    _submitData();
                   },
                   child: const Text("Next Student"),
                 ),
@@ -158,7 +164,7 @@ class _StudentDataPageState extends State<StudentDataPage> {
     );
   }
 
-void _submitData(int counter) async {
+void _submitData() async {
   // Example: Retrieve the data from controllers
   final studentId = studentIdController.text;
   final firstName = firstNameController.text;
