@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       initialRoute: MyHomePage.id, // Start with MyHomePage
       routes: {
         MyHomePage.id: (context) => const MyHomePage(),
