@@ -55,6 +55,10 @@ class _SearchStudentPageState extends State<SearchStudentPage> {
               ],
             ),
             const SizedBox(height: 20),
+            Row(
+              children: [const Spacer(),
+                Text("Search results: ${searchResults.length}")],
+            ),
             Expanded(
               child: searchResults.isNotEmpty
                   ? ListView.builder(

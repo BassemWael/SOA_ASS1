@@ -1,5 +1,7 @@
 import 'package:ass1/screens/add_students_count_page.dart';
 import 'package:ass1/screens/delete_student.dart';
+import 'package:ass1/screens/show_students.dart';
+import 'package:ass1/screens/update_student_id.dart';
 import 'package:flutter/material.dart';
 
 import 'search_student.dart';
@@ -37,6 +39,26 @@ class MyHomePage extends StatelessWidget {
                 SearchStudentPage.id,
               );
             }, child: const Text("Search")),
+            const SizedBox(
+              height: 30,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    UpdateStudentID.id,
+                  );
+                },
+                child: const Text("Update Student")),
+            const SizedBox(
+              height: 30,
+            ),
+            ElevatedButton(onPressed: () {
+              Navigator.pushNamed(
+                context,
+                ShowStudents.id,
+              );
+            }, child: const Text("Show Students")),
             const SizedBox(
               height: 30,
             ),

@@ -1,5 +1,8 @@
 import 'package:ass1/screens/delete_student.dart';
+import 'package:ass1/screens/show_students.dart';
 import 'package:ass1/screens/student_data_page.dart';
+import 'package:ass1/screens/update_student.dart';
+import 'package:ass1/screens/update_student_id.dart';
 import 'package:flutter/material.dart';
 import 'screens/homepage.dart';
 import 'screens/add_students_count_page.dart';
@@ -22,6 +25,8 @@ class MyApp extends StatelessWidget {
         AddStudentsCountPage.id: (context) => const AddStudentsCountPage(),
         DeleteStudentPage.id: (context) => DeleteStudentPage(),
         SearchStudentPage.id: (context) => SearchStudentPage(),
+        UpdateStudentID.id: (context) => UpdateStudentID(),
+        ShowStudents.id: (context) => ShowStudents(),
       },
     );
   }
