@@ -3,17 +3,16 @@ import '../Classes/student_class.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-
 class SearchStudentPage extends StatefulWidget {
   const SearchStudentPage({super.key});
   static const String id = "Search";
+
   @override
   State<SearchStudentPage> createState() => _SearchStudentPageState();
 }
 
 class _SearchStudentPageState extends State<SearchStudentPage> {
   final TextEditingController searchController = TextEditingController();
-
   List<Student> searchResults = [];
 
   @override
@@ -35,29 +34,23 @@ class _SearchStudentPageState extends State<SearchStudentPage> {
             TextField(
               controller: searchController,
               decoration: const InputDecoration(
-                labelText: "Search by First Name or GPA",
+                labelText: "Search by First Name, Last Name, Level, Gender, Address, ID, or GPA",
                 border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _searchStudents(searchController.text.trim());
-                    },
-                    child: const Text("Search"),
-                  ),
-                )
-              ],
+            ElevatedButton(
+              onPressed: () {
+                _searchStudents(searchController.text.trim());
+              },
+              child: const Text("Search"),
             ),
             const SizedBox(height: 20),
             Row(
-              children: [const Spacer(),
-                Text("Search results: ${searchResults.length}")],
+              children: [
+                const Spacer(),
+                Text("Search results: ${searchResults.length}"),
+              ],
             ),
             Expanded(
               child: searchResults.isNotEmpty
@@ -88,7 +81,6 @@ class _SearchStudentPageState extends State<SearchStudentPage> {
 
   void _searchStudents(String query) async {
     if (query.isEmpty) {
-      // Display an error message if the search field is empty
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Please enter a search term."),
@@ -98,17 +90,23 @@ class _SearchStudentPageState extends State<SearchStudentPage> {
       return;
     }
 
-    final url = Uri.parse('http://127.0.0.1:8080/api/students/search?searchKey=$query');
+    final url = Uri.parse(
+        'http://127.0.0.1:8080/api/students/search/ByKey?searchKey=$query');
 
     try {
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
-        final List<dynamic> data = jsonDecode(response.body);
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+
+        // Extract the students list from the response
+        final List<dynamic> studentsData = responseData['students'];
 
         // Parse response data into a list of Student objects
         setState(() {
-          searchResults = data.map((json) => Student.fromJson(json)).toList();
+          searchResults = studentsData
+              .map((json) => Student.fromJson(json as Map<String, dynamic>))
+              .toList();
         });
 
         if (searchResults.isEmpty) {
@@ -129,7 +127,6 @@ class _SearchStudentPageState extends State<SearchStudentPage> {
         );
       }
     } catch (e) {
-      // Handle any exceptions or errors during the request
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("An error occurred: $e"),
@@ -139,4 +136,3 @@ class _SearchStudentPageState extends State<SearchStudentPage> {
     }
   }
 }
-

@@ -40,14 +40,13 @@ public class StudentController {
 
     //  Search
     @GetMapping("/search")
-    public ResponseEntity<?> searchStudents(@RequestParam Map<String, String> filters) {
-        List<StudentData> results = studentService.searchStudents(filters);
+    public ResponseEntity<?> searchStudentsByMultiAttributes(@RequestParam Map<String, String> filters) {
+        List<StudentData> results = studentService.searchStudentsByMultiAttributes(filters);
         int count = results.size();
 
         if (count == 0) {
             return ResponseEntity.status(404).body("No students found.");
         }
-
 
         Map<String, Object> response = new HashMap<>();
         response.put("count", count);
@@ -55,6 +54,23 @@ public class StudentController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/search/ByKey")
+    public ResponseEntity<?> searchStudents(@RequestParam String searchKey) {
+        List<StudentData> results = studentService.searchStudentsByASearchKey(searchKey);
+        int count = results.size();
+
+        if (results.isEmpty()) {
+            return ResponseEntity.status(404).body("No students found.");
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("count", count);
+        response.put("students", results);
+
+        return ResponseEntity.ok(response);
+    }
+
 
 
     // Delete Student

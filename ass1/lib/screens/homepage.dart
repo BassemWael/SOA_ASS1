@@ -1,6 +1,6 @@
 import 'package:ass1/screens/add_students_count_page.dart';
 import 'package:ass1/screens/delete_student.dart';
-import 'package:ass1/screens/show_students.dart';
+import 'package:ass1/screens/sort_students.dart';
 import 'package:ass1/screens/update_student_id.dart';
 import 'package:flutter/material.dart';
 
@@ -58,7 +58,7 @@ class MyHomePage extends StatelessWidget {
                 context,
                 ShowStudents.id,
               );
-            }, child: const Text("Show Students")),
+            }, child: const Text("Sort Students")),
             const SizedBox(
               height: 30,
             ),

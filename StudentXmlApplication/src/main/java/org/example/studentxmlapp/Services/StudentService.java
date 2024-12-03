@@ -75,7 +75,7 @@ public class StudentService {
         return "Student updated successfully.";
     }
 
-    public List<StudentData> searchStudents(Map<String, String> criteria) {
+    public List<StudentData> searchStudentsByMultiAttributes(Map<String, String> criteria) {
         NodeList students = doc.getElementsByTagName("Student");
         List<StudentData> results = new ArrayList<>();
         for (int i = 0; i < students.getLength(); i++) {
@@ -86,6 +86,28 @@ public class StudentService {
         }
         return results;
     }
+
+    public List<StudentData> searchStudentsByASearchKey(String searchKey) {
+        NodeList students = doc.getElementsByTagName("Student");
+        List<StudentData> results = new ArrayList<>();
+        for (int i = 0; i < students.getLength(); i++) {
+            Element student = (Element) students.item(i);
+
+            // Check all attributes and elements for a match
+            if (student.getAttribute("ID").equalsIgnoreCase(searchKey) ||
+                    student.getElementsByTagName("FirstName").item(0).getTextContent().equalsIgnoreCase(searchKey) ||
+                    student.getElementsByTagName("LastName").item(0).getTextContent().equalsIgnoreCase(searchKey) ||
+                    student.getElementsByTagName("Gender").item(0).getTextContent().equalsIgnoreCase(searchKey) ||
+                    student.getElementsByTagName("GPA").item(0).getTextContent().equals(searchKey) ||
+                    student.getElementsByTagName("Level").item(0).getTextContent().equalsIgnoreCase(searchKey) ||
+                    student.getElementsByTagName("Address").item(0).getTextContent().equalsIgnoreCase(searchKey)) {
+
+                results.add(buildStudentDataFromElement(student));
+            }
+        }
+        return results;
+    }
+
 
     public boolean deleteStudent(String studentID) {
         NodeList students = doc.getElementsByTagName("Student");
@@ -107,9 +129,12 @@ public class StudentService {
             studentList.add(buildStudentDataFromElement((Element) students.item(i)));
         }
 
-        Comparator<StudentData> comparator = Comparator.comparing(s -> getAttributeValue(s, attribute));
+        Comparator<StudentData> comparator = Comparator.comparing(
+                s -> getAttributeValue(s, attribute).toLowerCase()
+        );
         if (!ascending) comparator = comparator.reversed();
         studentList.sort(comparator);
+
 
         saveSortedXML(studentList);
         return studentList;

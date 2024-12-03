@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <University>
+    <Student ID="202100185">
+        <FirstName>bassem</FirstName>
+        <LastName>wael</LastName>
+        <Gender>male</Gender>
+        <GPA>3.5</GPA>
+        <Level>4</Level>
+        <Address>cairo</Address>
+    </Student>
+    <Student ID="20210101">
+        <FirstName>Mohammed</FirstName>
+        <LastName>Moiner</LastName>
+        <Gender>male</Gender>
+        <GPA>3.8</GPA>
+        <Level>7</Level>
+        <Address>giza</Address>
+    </Student>
+    <Student ID="20210287">
+        <FirstName>Farah</FirstName>
+        <LastName>Mohammed</LastName>
+        <Gender>female</Gender>
+        <GPA>4</GPA>
+        <Level>4</Level>
+        <Address>cario</Address>
+    </Student>
+    <Student ID="20210288">
+        <FirstName>farah</FirstName>
+        <LastName>Mohammed</LastName>
+        <Gender>female</Gender>
+        <GPA>3.9</GPA>
+        <Level>3</Level>
+        <Address>cario</Address>
+    </Student>
     <Student ID="20210378">
         <FirstName>marwan</FirstName>
         <LastName>Ahmed</LastName>
@@ -7,62 +39,6 @@
         <GPA>3.5</GPA>
         <Level>4</Level>
         <Address>giza</Address>
-    </Student>
-    <Student ID="20200134">
-        <FirstName>Ahmed Updated</FirstName>
-        <LastName>Mohamed</LastName>
-        <Gender>Male</Gender>
-        <GPA>3.9</GPA>
-        <Level>4</Level>
-        <Address>Giza</Address>
-    </Student>
-    <Student ID="20210288">
-        <FirstName>Farah</FirstName>
-        <LastName>Mohammed</LastName>
-        <Gender>female</Gender>
-        <GPA>3.5</GPA>
-        <Level>4</Level>
-        <Address>cairo</Address>
-    </Student>
-    <Student ID="20211012">
-        <FirstName>eslam</FirstName>
-        <LastName>elsayed</LastName>
-        <Gender>male</Gender>
-        <GPA>3.5</GPA>
-        <Level>4</Level>
-        <Address>cairo</Address>
-    </Student>
-    <Student ID="20210000">
-        <FirstName>farah</FirstName>
-        <LastName>farah</LastName>
-        <Gender>female</Gender>
-        <GPA>3.5</GPA>
-        <Level>4</Level>
-        <Address>cairo</Address>
-    </Student>
-    <Student ID="20210554">
-        <FirstName>farah</FirstName>
-        <LastName>hazem</LastName>
-        <Gender>female</Gender>
-        <GPA>3.5</GPA>
-        <Level>4</Level>
-        <Address>cairo</Address>
-    </Student>
-    <Student ID="20210222">
-        <FirstName>m</FirstName>
-        <LastName>m</LastName>
-        <Gender>m</Gender>
-        <GPA>3.5</GPA>
-        <Level>4</Level>
-        <Address>m</Address>
-    </Student>
-    <Student ID="20213333">
-        <FirstName>m</FirstName>
-        <LastName>m</LastName>
-        <Gender>m</Gender>
-        <GPA>3.5</GPA>
-        <Level>4</Level>
-        <Address>cairo</Address>
     </Student>
     <Student ID="20210444">
         <FirstName>m</FirstName>
@@ -72,28 +48,20 @@
         <Level>4</Level>
         <Address>m</Address>
     </Student>
-    <Student ID="20210287">
-        <FirstName>farah</FirstName>
-        <LastName>mohammed</LastName>
-        <Gender>female</Gender>
-        <GPA>3.4</GPA>
-        <Level>4</Level>
-        <Address>cairo</Address>
-    </Student>
-    <Student ID="20210022">
+    <Student ID="20211012">
         <FirstName>eslam</FirstName>
-        <LastName>sayed</LastName>
-        <Gender>female</Gender>
-        <GPA>3.5</GPA>
-        <Level>4</Level>
-        <Address>cairo</Address>
-    </Student>
-    <Student ID="202100185">
-        <FirstName>bassem</FirstName>
-        <LastName>wael</LastName>
+        <LastName>elsayed</LastName>
         <Gender>male</Gender>
         <GPA>3.5</GPA>
         <Level>4</Level>
+        <Address>cairo</Address>
+    </Student>
+    <Student ID="20212222">
+        <FirstName>farah</FirstName>
+        <LastName>walid</LastName>
+        <Gender>female</Gender>
+        <GPA>3.4</GPA>
+        <Level>2</Level>
         <Address>cairo</Address>
     </Student>
 </University>

@@ -16,28 +16,32 @@ class _ShowStudentsState extends State<ShowStudents> {
   final List<String> dropdownItems = [
     'GPA',
     'ID',
-    'First Name',
-    'Second Name',
-    'Level'
+    'FirstName',
+    'LastName',
+    'Level',
+    'Address',
+    'Gender',
   ];
 
   // State variable to hold the selected value
-  String? selectedItem;
-  List<Student> searchResults = [];
+String? selectedItem;
+List<Student> searchResults = [];
+bool aord = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Show Students'),
+        title: const Text('sort Students'),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Add padding to position the dropdown at the top
-          Padding(
+        Padding(
             padding: const EdgeInsets.all(16.0),
             child: DropdownButtonFormField<String>(
+              key: ValueKey(selectedItem), // Ensure a unique key
               value: selectedItem,
               decoration: InputDecoration(
                 labelText: 'Select an option',
@@ -56,15 +60,35 @@ class _ShowStudentsState extends State<ShowStudents> {
               }).toList(),
               onChanged: (String? newValue) {
                 if (newValue != null) {
-                  _searchStudents(newValue);
+                  _searchStudents(newValue, aord);
                 }
 
                 setState(() {
                   selectedItem = newValue;
                 });
               },
+           
             ),
-          ),
+           ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8, right: 8),
+            child: IconButton(
+                onPressed: () {
+                  setState(() {
+                    if (aord == true) {
+                      aord = false;
+                    } else {
+                      aord = true;
+                    }
+                  });
+                  if (selectedItem != null) {
+                    _searchStudents(selectedItem!, aord);
+                  }
+                },
+                icon: aord == true
+                    ? const Icon(Icons.arrow_drop_up_rounded)
+                    : const Icon(Icons.arrow_drop_down_rounded)),
+                    ),
           // Example content or additional UI components
           Expanded(
             child: selectedItem == null
@@ -102,7 +126,7 @@ class _ShowStudentsState extends State<ShowStudents> {
     );
   }
 
-  void _searchStudents(String query) async {
+  void _searchStudents(String query,bool aord) async {
     if (query.isEmpty) {
       // Display an error message if the search field is empty
       ScaffoldMessenger.of(context).showSnackBar(
@@ -115,7 +139,7 @@ class _ShowStudentsState extends State<ShowStudents> {
     }
 
     final url =
-        Uri.parse('127.0.0.1:8080/api/students/sort?attribute=$query&ascending=true');
+        Uri.parse('http://127.0.0.1:8080/api/students/sort?attribute=$query&ascending=$aord');
 
     try {
       final response = await http.get(url);

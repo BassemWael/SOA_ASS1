@@ -78,18 +78,22 @@ class _UpdateStudentIDState extends State<UpdateStudentID> {
                   );
                   return;
                 }
-                final url = Uri.parse('127.0.0.1:8080/api/students/$iD');
+                final url = Uri.parse(
+                    'http://127.0.0.1:8080/api/students/search/ByKey?searchKey=$iD');
                 List<Student> searchResults = [];
                 try {
                   final response = await http.get(url);
-
                   if (response.statusCode == 200) {
-                    final List<dynamic> data = jsonDecode(response.body);
+                    final Map<String, dynamic> responseData =
+                        jsonDecode(response.body);
+
+                    // Extract the students list from the response
+                    final List<dynamic> studentsData = responseData['students'];
 
                     // Parse response data into a list of Student objects
                     setState(() {
                       searchResults =
-                          data.map((json) => Student.fromJson(json)).toList();
+                          studentsData.map((json) => Student.fromJson(json)).toList();
                     });
 
                     if (searchResults.isEmpty) {
@@ -122,8 +126,7 @@ class _UpdateStudentIDState extends State<UpdateStudentID> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => UpdateStudentData(
-                          iD: iD),
+                      builder: (context) => UpdateStudentData(iD: iD),
                     ),
                   );
                 }
